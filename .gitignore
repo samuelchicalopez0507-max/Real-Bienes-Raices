@@ -1,0 +1,11 @@
+# Archivos de trabajo / temporales (no se publican)
+_scrape/
+*.zip
+.vercel/
+.claude/
+node_modules/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
