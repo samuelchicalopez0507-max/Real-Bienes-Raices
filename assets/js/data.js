@@ -10,8 +10,8 @@
 
 const CONTACT = {
   brand: "REAL Bienes Raíces",
-  whatsapp: "573122458661",
-  phones: ["300 692 4702", "312 245 8661", "323 227 3772"],
+  whatsapp: "573232273772",
+  phones: ["323 227 3772", "300 692 4702"],
   email: "realbienesraices.col@gmail.com",
   instagram: "https://www.instagram.com/real.bienesraices/",
   city: "La Ceja, Antioquia — Oriente Antioqueño",

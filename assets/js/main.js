@@ -477,12 +477,12 @@
 
   /* ---------- FAQ ---------- */
   const FAQS = [
-    ["¿Cómo agendo una visita a una propiedad?", "Escríbenos por WhatsApp al 312 245 8661 o usa el botón “Agendar Visita” en cualquier propiedad. Coordinamos contigo el día y la hora."],
+    ["¿Cómo agendo una visita a una propiedad?", "Escríbenos por WhatsApp al 323 227 3772 o usa el botón “Agendar Visita” en cualquier propiedad. Coordinamos contigo el día y la hora."],
     ["¿Qué zonas cubren?", "Trabajamos en La Ceja y el Oriente Antioqueño. Todo nuestro portafolio actual se encuentra en esta zona."],
     ["¿La información de las propiedades es verificada?", "Sí. Cada propiedad publicada corresponde a la información y fotografías oficiales de nuestro inventario."],
     ["¿Me acompañan durante todo el proceso de compra?", "Sí. Te acompañamos desde la primera visita hasta la entrega del inmueble, resolviendo tus dudas en cada paso."],
     ["Quiero vender mi propiedad, ¿qué debo hacer?", "Contáctanos por WhatsApp o a través del formulario. Un asesor conocerá tu propiedad y te explicará el proceso de publicación y venta."],
-    ["¿Atienden por WhatsApp?", "Sí, es nuestro canal más rápido: 312 245 8661. También puedes llamarnos al 300 692 4702 o al 323 227 3772."],
+    ["¿Atienden por WhatsApp?", "Sí, es nuestro canal más rápido: 323 227 3772. También puedes llamarnos al 300 692 4702."],
   ];
   $("#faq-list").innerHTML = FAQS.map(
     ([q, a]) => `
