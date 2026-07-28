@@ -427,13 +427,14 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.15; color: var(--teal-deep); font-wei
 }
 .hero-search .fields {
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1.2fr 1fr auto;
+  grid-template-columns: minmax(0,1.2fr) minmax(0,1fr) minmax(0,1.2fr) minmax(0,1fr) auto;
   gap: 8px;
 }
 .hero-search .field {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
   padding: 10px 16px;
   border-radius: var(--r-md);
   background: rgba(255,255,255,.94);
@@ -460,6 +461,9 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.15; color: var(--teal-deep); font-wei
   color: var(--teal-deep);
   outline: none;
   padding: 0;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
@@ -1815,10 +1819,18 @@ a.c-item:hover { padding-left: 8px; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
   .gallery-grid { grid-template-columns: repeat(3, 1fr); }
   .g-item:nth-child(8n+1) { grid-column: span 2; grid-row: span 1; }
-  .hero-search .fields { grid-template-columns: 1fr 1fr; }
+  .hero-search .fields { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
   .hero-search .go { grid-column: 1 / -1; padding-block: 15px; }
   .filters { position: static; }
   .section { padding: 84px 0; }
+
+  /* Centrado estético en tablet y móvil */
+  .sec-head { text-align: center; margin-left: auto; margin-right: auto; }
+  .sec-head .kicker { justify-content: center; }
+  .sec-head .kicker::after {
+    content: ""; width: 26px; height: 1.5px;
+    background: var(--magenta); border-radius: 2px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1848,4 +1860,19 @@ a.c-item:hover { padding-left: 8px; }
   .section { padding: 68px 0; }
   .to-top { right: 22px; }
   .testi-card { width: 100%; }
+
+  /* Centrado estético en móvil: Nosotros, Contacto y sus textos */
+  .about-copy { text-align: center; }
+  .about-copy .kicker, .contact-info .kicker { justify-content: center; }
+  .about-copy .kicker::after {
+    content: ""; width: 26px; height: 1.5px;
+    background: var(--magenta); border-radius: 2px;
+  }
+  .pillars { justify-items: center; max-width: 340px; margin-inline: auto; }
+  .pillar { width: 100%; justify-content: center; }
+  .contact-info { text-align: center; }
+  .contact-info > p { margin-inline: auto; }
+  .c-item { text-align: left; }
+  .results-count { text-align: center; }
+  .load-more-wrap { margin-top: 34px; }
 }

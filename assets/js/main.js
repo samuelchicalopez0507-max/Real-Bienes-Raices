@@ -379,9 +379,13 @@
     $("#propiedades").scrollIntoView({ behavior: "smooth" });
   });
 
-  /* nav Comprar/Arrendar presetea operación */
-  $$(".nav a[data-op]").forEach((a) =>
-    a.addEventListener("click", () => { F.op.value = a.dataset.op; applyFilters(); })
+  /* nav (escritorio y móvil) Comprar/Arrendar presetea operación y filtra */
+  $$("a[data-op]").forEach((a) =>
+    a.addEventListener("click", () => {
+      F.op.value = a.dataset.op;
+      applyFilters();
+      setTimeout(() => $("#propiedades").scrollIntoView({ behavior: "smooth" }), 60);
+    })
   );
 
   /* ---------- Timeline procesos ---------- */
