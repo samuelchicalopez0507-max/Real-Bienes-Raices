@@ -32,6 +32,19 @@ y abrir http://localhost:8321
    - `featured: true` para mostrarla en "Propiedades destacadas".
 3. Agregar la URL a `sitemap.xml`.
 
+### Campos opcionales de la ficha
+
+Estos tres son opcionales: la tarjeta aparece en la ficha **solo si el inmueble trae el dato**.
+Si no existen, no se muestra nada (no queda ningún hueco).
+
+| Campo | Tipo | Ejemplo | Se muestra como |
+|---|---|---|---|
+| `admin` | número, sin puntos | `285000` | Administración · $285.000 |
+| `floor` | número o texto | `5` | Piso · 5 |
+| `elevator` | `true` / `false` | `true` | Ascensor · Sí |
+
+El **código del inmueble** (`code`) ya se muestra automáticamente en la ficha.
+
 El diseño, carrusel, filtros, galería y botones de WhatsApp se aplican automáticamente.
 
 ## Testimonios, estadísticas y blog

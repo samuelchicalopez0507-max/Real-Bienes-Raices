@@ -1044,32 +1044,6 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.15; color: var(--teal-deep); font-wei
 .pillar svg { width: 20px; height: 20px; color: var(--magenta); flex: none; }
 
 /* ---------- Timeline procesos ---------- */
-.process-tabs {
-  display: inline-flex;
-  gap: 6px;
-  padding: 6px;
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-xs);
-  margin-bottom: 54px;
-}
-.process-tabs button {
-  padding: 11px 28px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--ink-soft);
-  transition: background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
-}
-.process-tabs button.on {
-  background: var(--teal);
-  color: #fff;
-  box-shadow: 0 6px 16px rgba(45,98,108,.3);
-}
-
 .timeline {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -1875,4 +1849,60 @@ a.c-item:hover { padding-left: 8px; }
   .c-item { text-align: left; }
   .results-count { text-align: center; }
   .load-more-wrap { margin-top: 34px; }
+}
+
+/* ---------- Sección propietarios (Vende tu propiedad) ---------- */
+.owners {
+  background:
+    radial-gradient(900px 420px at 12% 0%, rgba(158,192,204,.22), transparent 60%),
+    radial-gradient(760px 380px at 92% 100%, rgba(207,183,196,.22), transparent 62%),
+    var(--white);
+}
+.owners-steps { grid-template-columns: repeat(3, 1fr); row-gap: 26px; }
+.owners-steps .tl-step:nth-child(3n)::after { display: none; }
+.owners-form { max-width: 720px; margin: 58px auto 0; }
+.owners-form .form-card { width: 100%; }
+
+/* ---------- Formularios de captación por tipo de solicitud ---------- */
+.lead-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 26px;
+}
+.lead-tabs button {
+  padding: 9px 17px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  transition: background var(--t-fast), color var(--t-fast),
+              border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.lead-tabs button:hover { border-color: var(--teal); color: var(--teal-deep); }
+.lead-tabs button.on {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(45,98,108,.28);
+}
+.lead-note {
+  margin: -8px 0 20px;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+}
+.lead-form .form-grid > .btn { grid-column: 1 / -1; margin-top: 4px; }
+
+@media (max-width: 980px) {
+  .owners-steps { grid-template-columns: repeat(2, 1fr); }
+  .owners-steps .tl-step:nth-child(3n)::after { display: block; }
+  .owners-steps .tl-step:nth-child(2n)::after { display: none; }
+}
+@media (max-width: 640px) {
+  .owners-steps { grid-template-columns: 1fr; }
+  .owners-form { margin-top: 40px; }
+  .lead-tabs { gap: 6px; }
+  .lead-tabs button { padding: 8px 13px; font-size: 12.5px; }
 }

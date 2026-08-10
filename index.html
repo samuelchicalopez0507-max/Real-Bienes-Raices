@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=5" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=6" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -45,7 +45,7 @@
       <nav class="nav" aria-label="Navegación principal">
         <a href="#inicio" class="active">Inicio</a>
         <a href="#propiedades" data-op="venta">Comprar</a>
-        <a href="#vender">Vender</a>
+        <a href="#propietarios">Vender</a>
         <a href="#propiedades" data-op="arriendo">Arrendar</a>
         <a href="#propiedades">Propiedades</a>
         <a href="#nosotros">Nosotros</a>
@@ -66,7 +66,7 @@
   <div class="mobile-menu" id="mobile-menu">
     <a href="#inicio">Inicio</a>
     <a href="#propiedades" data-op="venta">Comprar</a>
-    <a href="#vender">Vender</a>
+    <a href="#propietarios">Vender</a>
     <a href="#propiedades" data-op="arriendo">Arrendar</a>
     <a href="#propiedades">Propiedades</a>
     <a href="#nosotros">Nosotros</a>
@@ -281,6 +281,27 @@
     </div>
   </section>
 
+  <!-- ================= PROPIETARIOS / VENDE TU PROPIEDAD ================= -->
+  <section class="section owners" id="propietarios" aria-label="Vende tu propiedad">
+    <div class="container">
+      <div class="sec-head center rv">
+        <span class="kicker">Para propietarios</span>
+        <h2>Vende tu propiedad con nosotros</h2>
+        <p>Nos encargamos de todo el proceso: desde ponerle el precio correcto hasta acompañarte en la firma. Tú solo recibes ofertas serias.</p>
+      </div>
+
+      <div class="timeline owners-steps rv" id="owners-timeline"></div>
+
+      <div class="owners-form rv" data-rv="scale">
+        <div class="form-card">
+          <h3>Cuéntanos de tu inmueble</h3>
+          <p>Déjanos los datos y un asesor te contacta para coordinar la valoración, sin costo y sin compromiso.</p>
+          <div id="owner-form-slot"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= NOSOTROS ================= -->
   <section class="section" id="nosotros" aria-label="Quiénes somos">
     <div class="container">
@@ -311,18 +332,12 @@
   </section>
 
   <!-- ================= PROCESOS ================= -->
-  <section class="section blush" id="vender" aria-label="Proceso de compra y venta">
+  <section class="section blush" id="proceso" aria-label="Proceso de compra">
     <div class="container">
       <div class="sec-head center rv">
         <span class="kicker">Nuestra forma de trabajar</span>
-        <h2>Un proceso simple y transparente</h2>
-        <p>Te acompañamos de principio a fin, sin letra pequeña y sin sorpresas.</p>
-      </div>
-      <div style="text-align:center" class="rv">
-        <div class="process-tabs" role="tablist" aria-label="Elegir proceso">
-          <button type="button" class="on" data-proc="compra" role="tab" aria-selected="true">Quiero comprar</button>
-          <button type="button" data-proc="venta" role="tab" aria-selected="false">Quiero vender</button>
-        </div>
+        <h2>Así acompañamos tu compra</h2>
+        <p>Te acompañamos de principio a fin, sin letra pequeña y sin sorpresas. Si lo que quieres es vender, <a href="#propietarios">mira el proceso para propietarios</a>.</p>
       </div>
       <div class="timeline rv" id="timeline"></div>
     </div>
@@ -347,7 +362,7 @@
           <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
           <h3>Venta de tu inmueble</h3>
           <p>Publicamos, promovemos y gestionamos la venta de tu propiedad con total profesionalismo.</p>
-          <a href="#" data-wa="Hola, REAL Bienes Raíces. Quiero vender mi propiedad y me gustaría recibir asesoría." target="_blank" rel="noopener">Vender mi propiedad <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+          <a href="#propietarios">Vender mi propiedad <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
         </article>
         <article class="svc-card rv" style="transition-delay:200ms">
           <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg></div>
@@ -433,41 +448,9 @@
 
         <div class="form-card rv" data-rv="right">
           <h3>Solicita información</h3>
-          <p>Déjanos tus datos y un asesor te contactará muy pronto.</p>
-          <form id="contact-form" novalidate>
-            <div class="form-grid">
-              <div class="fld">
-                <label for="cf-name">Nombre completo</label>
-                <input id="cf-name" name="name" type="text" autocomplete="name" placeholder="Tu nombre" required />
-              </div>
-              <div class="fld">
-                <label for="cf-phone">Teléfono</label>
-                <input id="cf-phone" name="phone" type="tel" autocomplete="tel" placeholder="Tu número" required />
-              </div>
-              <div class="fld full">
-                <label for="cf-email">Correo electrónico</label>
-                <input id="cf-email" name="email" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" required />
-              </div>
-              <div class="fld full">
-                <label for="cf-interest">Tipo de interés</label>
-                <select id="cf-interest" name="interest">
-                  <option>Quiero comprar</option>
-                  <option>Quiero vender</option>
-                  <option>Quiero arrendar</option>
-                  <option>Otro</option>
-                </select>
-              </div>
-              <div class="fld full">
-                <label for="cf-msg">Mensaje</label>
-                <textarea id="cf-msg" name="message" rows="4" placeholder="Cuéntanos qué estás buscando…" required></textarea>
-              </div>
-            </div>
-            <div class="form-grid" style="margin-top:18px">
-              <button type="submit" class="btn btn-magenta full" style="grid-column:1/-1">Enviar por WhatsApp</button>
-            </div>
-            <p class="form-note">Al enviar, se abrirá WhatsApp con tu mensaje listo para nuestro equipo. Tus datos solo se usan para atender tu solicitud.</p>
-            <p class="form-ok" id="form-ok">✓ ¡Listo! Tu mensaje se abrió en WhatsApp. Te responderemos muy pronto.</p>
-          </form>
+          <p>Elige qué necesitas y te pedimos solo los datos de ese trámite.</p>
+          <div class="lead-tabs" id="lead-tabs" role="tablist" aria-label="Tipo de solicitud"></div>
+          <div id="lead-form-slot"></div>
         </div>
       </div>
     </div>
@@ -510,7 +493,7 @@
           <h4>Servicios</h4>
           <ul>
             <li><a href="#propiedades">Comprar</a></li>
-            <li><a href="#vender">Vender</a></li>
+            <li><a href="#propietarios">Vender</a></li>
             <li><a href="#servicios">Asesoría</a></li>
             <li><a href="#faq">Preguntas frecuentes</a></li>
           </ul>
@@ -543,7 +526,7 @@
 
   <div class="toast" id="toast" role="status"></div>
 
-  <script src="assets/js/data.js?v=5"></script>
-  <script src="assets/js/main.js?v=5"></script>
+  <script src="assets/js/data.js?v=6"></script>
+  <script src="assets/js/main.js?v=6"></script>
 </body>
 </html>

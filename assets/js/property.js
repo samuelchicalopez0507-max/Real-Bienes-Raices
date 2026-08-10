@@ -65,21 +65,31 @@
     heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.4 3-3.1 3-5.4A5.4 5.4 0 0 0 16.5 3c-1.8 0-3.4.9-4.5 2.3A5.9 5.9 0 0 0 7.5 3 5.4 5.4 0 0 0 2 8.6C2 11 3.5 12.6 5 14l7 7Z"/></svg>',
     cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
     check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+    tag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0l-7.2-7.2A2 2 0 0 1 2.8 12V4.8A2 2 0 0 1 4.8 2.8H12a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.4"/></svg>',
+    coin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.6-.9-1.7-1.5-3-1.5-1.9 0-3 1-3 2.2 0 1.3 1.2 1.8 3 2.1 1.8.3 3 .8 3 2.1 0 1.2-1.1 2.1-3 2.1-1.3 0-2.4-.6-3-1.5"/><path d="M12 6.5v11"/></svg>',
+    stairs: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h4v-4h4v-4h4V9h4V5"/><path d="M3 21V17"/></svg>',
+    lift: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 3v18"/><path d="m8 10 1.6-2L11 10"/><path d="m13 14 1.6 2L16 14"/></svg>',
   };
 
   const loc = prop.sector ? `${prop.sector}, ${prop.city}` : `${prop.city}, Antioquia`;
   const isLandLike = prop.type === "Lote";
   const priceHeading = prop.operation === "arriendo" ? "Canon de arriendo" : "Precio de venta";
 
-  /* ---------- Especificaciones (solo datos reales) ---------- */
+  /* ---------- Especificaciones (solo datos reales) ----------
+     admin, floor y elevator son opcionales: la tarjeta aparece
+     únicamente cuando el inmueble trae el dato cargado. */
   const specs = [
+    prop.code && { i: I.tag, v: prop.code, l: "Código" },
     prop.area != null && { i: I.area, v: `${prop.area} m²`, l: isLandLike ? "Área lote" : "Área construida" },
     (prop.areaLote != null && prop.areaLote !== prop.area) && { i: I.layers, v: `${prop.areaLote} m²`, l: "Área lote/terreno" },
     prop.rooms != null && { i: I.bed, v: prop.rooms, l: "Alcobas" },
     prop.baths != null && { i: I.bath, v: prop.baths, l: "Baños" },
-    prop.garages != null && { i: I.car, v: prop.garages, l: prop.garages === 1 ? "Garaje" : "Garajes" },
+    prop.garages != null && { i: I.car, v: prop.garages, l: prop.garages === 1 ? "Parqueadero" : "Parqueaderos" },
     prop.estrato != null && { i: I.layers, v: prop.estrato, l: "Estrato" },
-    prop.year != null && { i: I.cal, v: prop.year, l: "Año" },
+    prop.admin != null && { i: I.coin, v: fmtCOP(prop.admin), l: "Administración" },
+    prop.floor != null && { i: I.stairs, v: prop.floor, l: "Piso" },
+    prop.elevator != null && { i: I.lift, v: prop.elevator ? "Sí" : "No", l: "Ascensor" },
+    prop.year != null && { i: I.cal, v: prop.year, l: "Año de construcción" },
     { i: I.pin, v: prop.city, l: "Municipio" },
   ].filter(Boolean);
 

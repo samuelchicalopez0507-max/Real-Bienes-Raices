@@ -388,26 +388,9 @@
     })
   );
 
-  /* ---------- Timeline procesos ---------- */
-  const PROCESSES = {
-    compra: [
-      ["Escuchamos tus necesidades", "Entendemos qué buscas, tu presupuesto y tu estilo de vida."],
-      ["Seleccionamos las mejores opciones", "Filtramos el portafolio y te presentamos solo lo que encaja contigo."],
-      ["Programamos visitas", "Coordinamos recorridos por las propiedades que te interesan."],
-      ["Acompañamiento en el proceso", "Te orientamos en cada paso, con transparencia y sin presiones."],
-      ["Entrega del inmueble", "Recibes tu nueva propiedad con el respaldo de nuestro equipo."],
-    ],
-    venta: [
-      ["Conocemos tu propiedad", "Escuchamos tus expectativas y visitamos el inmueble."],
-      ["Preparamos la publicación", "Fotografías e información clara para presentarla de la mejor forma."],
-      ["Promovemos tu inmueble", "Lo conectamos con compradores realmente interesados."],
-      ["Gestionamos visitas y ofertas", "Coordinamos recorridos y te presentamos cada propuesta."],
-      ["Cierre y firma", "Te acompañamos hasta la firma, con seguridad en cada detalle."],
-    ],
-  };
-  const timeline = $("#timeline");
-  const renderProcess = (key) => {
-    timeline.innerHTML = PROCESSES[key]
+  /* ---------- Procesos: compra (sección general) y venta (sección propietarios) ---------- */
+  const stepsHtml = (steps) =>
+    steps
       .map(
         ([t, d], i) => `
       <div class="tl-step" style="animation:cardIn 500ms cubic-bezier(.22,1,.36,1) ${i * 90}ms both">
@@ -415,17 +398,29 @@
       </div>`
       )
       .join("");
-  };
-  renderProcess("compra");
-  $$(".process-tabs button").forEach((b) =>
-    b.addEventListener("click", () => {
-      $$(".process-tabs button").forEach((x) => {
-        x.classList.remove("on"); x.setAttribute("aria-selected", "false");
-      });
-      b.classList.add("on"); b.setAttribute("aria-selected", "true");
-      renderProcess(b.dataset.proc);
-    })
-  );
+
+  const BUY_STEPS = [
+    ["Escuchamos tus necesidades", "Entendemos qué buscas, tu presupuesto y tu estilo de vida."],
+    ["Seleccionamos las mejores opciones", "Filtramos el portafolio y te presentamos solo lo que encaja contigo."],
+    ["Programamos visitas", "Coordinamos recorridos por las propiedades que te interesan."],
+    ["Acompañamiento en el proceso", "Te orientamos en cada paso, con transparencia y sin presiones."],
+    ["Entrega del inmueble", "Recibes tu nueva propiedad con el respaldo de nuestro equipo."],
+  ];
+
+  /* Los 6 pasos del proceso para propietarios */
+  const SELL_STEPS = [
+    ["Valoración", "Visitamos el inmueble y definimos contigo un precio acorde a la zona, el área y el estado de la propiedad."],
+    ["Publicación", "Preparamos las fotografías y la información completa, y la publicamos en nuestro portafolio."],
+    ["Promoción", "Difundimos tu inmueble por nuestros canales para llegar a compradores realmente interesados."],
+    ["Visitas", "Coordinamos y acompañamos cada recorrido, y filtramos a los que solo van a mirar."],
+    ["Negociación", "Te presentamos cada oferta y negociamos buscando las mejores condiciones para ti."],
+    ["Acompañamiento hasta el cierre", "Te guiamos en los documentos, la escrituración y la firma, hasta la entrega del inmueble."],
+  ];
+
+  const timeline = $("#timeline");
+  if (timeline) timeline.innerHTML = stepsHtml(BUY_STEPS);
+  const ownersTl = $("#owners-timeline");
+  if (ownersTl) ownersTl.innerHTML = stepsHtml(SELL_STEPS);
 
   /* ---------- Stats (solo datos reales/derivados; estructura lista para más) ---------- */
   const statsBand = $("#stats-band");
@@ -502,29 +497,138 @@
     });
   });
 
-  /* ---------- Formulario de contacto → WhatsApp ---------- */
-  const form = $("#contact-form");
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    let ok = true;
-    ["cf-name", "cf-phone", "cf-email", "cf-msg"].forEach((id) => {
-      const el = document.getElementById(id);
-      const bad = !el.value.trim() || (id === "cf-email" && !/^\S+@\S+\.\S+$/.test(el.value));
-      el.classList.toggle("err", bad);
-      if (bad) ok = false;
+  /* ---------- Formularios de captación (uno por tipo de solicitud) ---------- */
+  const ROOM_OPTS = ["1", "2", "3", "4", "5 o más"];
+  const FIELD = {
+    tipoBusca:      { label: "Tipo de inmueble que buscas", el: "select", opts: () => types, any: "Cualquiera" },
+    tipoMio:        { label: "Tipo de inmueble", el: "select", opts: () => types, any: "Selecciona" },
+    municipio:      { label: "Municipio de interés", el: "select", opts: () => cities, any: "Cualquiera" },
+    alcobas:        { label: "Alcobas que necesitas", el: "select", opts: () => ROOM_OPTS, any: "Cualquiera" },
+    ubicacion:      { label: "Municipio y barrio o sector", el: "input", ph: "Ej: La Ceja, sector El Tambo" },
+    presupuesto:    { label: "Presupuesto aproximado", el: "input", ph: "Ej: $600.000.000" },
+    presupuestoMes: { label: "Presupuesto mensual", el: "input", ph: "Ej: $2.000.000" },
+    area:           { label: "Área construida aproximada", el: "input", ph: "Ej: 140 m²" },
+    precioEsperado: { label: "Precio esperado", el: "input", ph: "Ej: $700.000.000" },
+    canonEsperado:  { label: "Canon mensual esperado", el: "input", ph: "Ej: $2.500.000" },
+  };
+
+  const LEAD_TYPES = {
+    comprar: {
+      tab: "Comprar", asunto: "Quiero comprar",
+      nota: "Cuéntanos qué buscas y te enviamos las opciones que encajan.",
+      extra: ["tipoBusca", "municipio", "alcobas", "presupuesto"],
+    },
+    arrendar: {
+      tab: "Arrendar", asunto: "Quiero arrendar (busco inmueble)",
+      nota: "Dinos qué necesitas y te mostramos lo que hay disponible.",
+      extra: ["tipoBusca", "municipio", "alcobas", "presupuestoMes"],
+    },
+    vender: {
+      tab: "Vender mi inmueble", asunto: "Quiero vender mi inmueble",
+      nota: "Un asesor te contacta para coordinar la valoración, sin costo.",
+      extra: ["tipoMio", "ubicacion", "area", "precioEsperado"],
+    },
+    rentar: {
+      tab: "Arrendar mi inmueble", asunto: "Quiero poner mi inmueble en arriendo",
+      nota: "Un asesor te contacta para conocer el inmueble.",
+      extra: ["tipoMio", "ubicacion", "area", "canonEsperado"],
+    },
+    asesoria: {
+      tab: "Asesoría", asunto: "Solicito asesoría",
+      nota: "Cuéntanos tu caso y te orientamos sin compromiso.",
+      extra: [],
+    },
+  };
+
+  let leadSeq = 0;
+  const buildLeadForm = (key, slot, showNota = true) => {
+    const t = LEAD_TYPES[key];
+    const uid = "lf" + ++leadSeq;
+    const extraHtml = t.extra
+      .map((name) => {
+        const f = FIELD[name];
+        const id = `${uid}-${name}`;
+        const ctrl = f.el === "select"
+          ? `<select id="${id}" data-f="${name}"><option value="">${f.any}</option>${f.opts().map((v) => `<option>${v}</option>`).join("")}</select>`
+          : `<input id="${id}" data-f="${name}" type="text" placeholder="${f.ph}" />`;
+        return `<div class="fld"><label for="${id}">${f.label}</label>${ctrl}</div>`;
+      })
+      .join("");
+
+    slot.innerHTML = `
+      <form class="lead-form" novalidate>
+        ${showNota ? `<p class="lead-note">${t.nota}</p>` : ""}
+        <div class="form-grid">
+          <div class="fld"><label for="${uid}-name">Nombre completo</label><input id="${uid}-name" data-f="name" type="text" autocomplete="name" placeholder="Tu nombre" required /></div>
+          <div class="fld"><label for="${uid}-phone">Teléfono / WhatsApp</label><input id="${uid}-phone" data-f="phone" type="tel" autocomplete="tel" placeholder="Tu número" required /></div>
+          <div class="fld full"><label for="${uid}-email">Correo electrónico</label><input id="${uid}-email" data-f="email" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" required /></div>
+          ${extraHtml}
+          <div class="fld full"><label for="${uid}-msg">Mensaje</label><textarea id="${uid}-msg" data-f="msg" rows="3" placeholder="Cuéntanos los detalles…"></textarea></div>
+          <button type="submit" class="btn btn-magenta full">Enviar por WhatsApp</button>
+        </div>
+        <p class="form-note">Al enviar se abre WhatsApp con tu solicitud lista para nuestro equipo. Tus datos solo se usan para atenderla.</p>
+        <p class="form-ok">✓ ¡Listo! Tu solicitud se abrió en WhatsApp. Te respondemos muy pronto.</p>
+      </form>`;
+
+    const form = $("form", slot);
+    const val = (n) => {
+      const el = $(`[data-f="${n}"]`, form);
+      return el ? el.value.trim() : "";
+    };
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let ok = true;
+      ["name", "phone", "email"].forEach((n) => {
+        const el = $(`[data-f="${n}"]`, form);
+        const bad = !el.value.trim() || (n === "email" && !/^\S+@\S+\.\S+$/.test(el.value));
+        el.classList.toggle("err", bad);
+        if (bad) ok = false;
+      });
+      if (!ok) return;
+
+      const lines = [
+        `*SOLICITUD: ${t.asunto}*`, "",
+        `Nombre: ${val("name")}`,
+        `Teléfono: ${val("phone")}`,
+        `Correo: ${val("email")}`,
+      ];
+      t.extra.forEach((n) => {
+        const v = val(n);
+        if (v) lines.push(`${FIELD[n].label}: ${v}`);
+      });
+      const m = val("msg");
+      if (m) lines.push("", `Mensaje: ${m}`);
+
+      window.open(waLink(lines.join("\n")), "_blank", "noopener");
+      const okMsg = $(".form-ok", form);
+      okMsg.classList.add("show");
+      form.reset();
+      setTimeout(() => okMsg.classList.remove("show"), 7000);
     });
-    if (!ok) return;
-    const msg =
-      `Hola, REAL Bienes Raíces. Soy ${$("#cf-name").value.trim()}.\n` +
-      `Interés: ${$("#cf-interest").value}\n` +
-      `Teléfono: ${$("#cf-phone").value.trim()}\n` +
-      `Correo: ${$("#cf-email").value.trim()}\n\n` +
-      $("#cf-msg").value.trim();
-    window.open(waLink(msg), "_blank", "noopener");
-    $("#form-ok").classList.add("show");
-    form.reset();
-    setTimeout(() => $("#form-ok").classList.remove("show"), 7000);
-  });
+  };
+
+  /* Contacto: pestañas con los 5 tipos de solicitud */
+  const leadTabs = $("#lead-tabs"), leadSlot = $("#lead-form-slot");
+  if (leadTabs && leadSlot) {
+    const keys = Object.keys(LEAD_TYPES);
+    leadTabs.innerHTML = keys
+      .map((k, i) => `<button type="button" role="tab" data-k="${k}" class="${i === 0 ? "on" : ""}" aria-selected="${i === 0}">${LEAD_TYPES[k].tab}</button>`)
+      .join("");
+    buildLeadForm(keys[0], leadSlot);
+    $$("button", leadTabs).forEach((b) =>
+      b.addEventListener("click", () => {
+        $$("button", leadTabs).forEach((x) => {
+          x.classList.remove("on"); x.setAttribute("aria-selected", "false");
+        });
+        b.classList.add("on"); b.setAttribute("aria-selected", "true");
+        buildLeadForm(b.dataset.k, leadSlot);
+      })
+    );
+  }
+
+  /* Sección propietarios: formulario de venta, sin pestañas */
+  const ownerSlot = $("#owner-form-slot");
+  if (ownerSlot) buildLeadForm("vender", ownerSlot, false);
 
   /* ---------- Footer ---------- */
   $("#year").textContent = new Date().getFullYear();
