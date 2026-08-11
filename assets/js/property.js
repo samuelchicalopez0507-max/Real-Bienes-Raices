@@ -6,7 +6,50 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
   const params = new URLSearchParams(location.search);
-  const prop = PROPERTIES.find((p) => p.id === params.get("id")) || PROPERTIES[0];
+  const wantedId = params.get("id");
+  const prop = PROPERTIES.find((p) => p.id === wantedId) || (wantedId ? null : PROPERTIES[0]);
+
+  /* Enlace a un inmueble ya retirado del portafolio: avisamos en vez de
+     mostrar otra propiedad distinta sin ninguna explicación. */
+  if (!prop) {
+    document.title = "Propiedad no disponible — REAL Bienes Raíces";
+    const nx = document.createElement("meta");
+    nx.name = "robots"; nx.content = "noindex";
+    document.head.appendChild(nx);
+
+    const wa = waLink("Hola, REAL Bienes Raíces. Vi una propiedad que ya no está disponible y quisiera conocer opciones similares.");
+    ["header-wa", "mobile-wa", "footer-wa", "wa-float"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.href = wa;
+    });
+
+    $("#prop-main").innerHTML = `
+      <section class="section" style="padding-top:150px">
+        <div class="container">
+          <div class="sec-head center">
+            <span class="kicker">Propiedad no disponible</span>
+            <h2>Esta propiedad ya no está en nuestro portafolio</h2>
+            <p>Es posible que se haya vendido o arrendado. Con gusto te ayudamos a encontrar otra que se ajuste a lo que buscas.</p>
+          </div>
+          <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+            <a class="btn btn-magenta" href="index.html#propiedades">Ver propiedades disponibles</a>
+            <a class="btn btn-teal" href="${wa}" target="_blank" rel="noopener">Hablar con un asesor</a>
+          </div>
+        </div>
+      </section>`;
+
+    $("#header").classList.add("solid");
+    const bg = $("#burger"), mm = $("#mobile-menu");
+    bg.addEventListener("click", () => {
+      const open = mm.classList.toggle("open");
+      bg.classList.toggle("open", open);
+      bg.setAttribute("aria-expanded", open);
+      document.body.style.overflow = open ? "hidden" : "";
+    });
+    $("#year").textContent = new Date().getFullYear();
+    $("#to-top").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    return;
+  }
 
   /* ---------- WhatsApp ---------- */
   const WA_PROP = propWaLink(prop);
