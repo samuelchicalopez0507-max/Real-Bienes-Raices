@@ -302,6 +302,7 @@
                 <div class="fld"><label for="pf-msg">Mensaje</label><textarea id="pf-msg" rows="3">Hola, me interesa esta propiedad y quiero más información.</textarea></div>
                 <button type="submit" class="btn btn-magenta">Enviar por WhatsApp</button>
               </div>
+              <p class="form-note">Al enviar autorizas el tratamiento de tus datos según nuestra <a href="legal.html#datos">política de datos personales</a>.</p>
               <p class="form-ok" id="pf-ok">✓ Tu mensaje se abrió en WhatsApp.</p>
             </form>
           </div>

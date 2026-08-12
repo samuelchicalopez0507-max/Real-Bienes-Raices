@@ -422,13 +422,31 @@
   const ownersTl = $("#owners-timeline");
   if (ownersTl) ownersTl.innerHTML = stepsHtml(SELL_STEPS);
 
-  /* ---------- Stats (solo datos reales/derivados; estructura lista para más) ---------- */
+  /* ---------- Datos de contacto y empresa ---------- */
+  const hoursEl = $("#c-hours");
+  if (hoursEl)
+    hoursEl.innerHTML = CONTACT.hours.map(([d, h]) => `${d}: ${h}`).join("<br>");
+
+  const covEl = $("#c-coverage");
+  if (covEl) covEl.textContent = COMPANY.municipios.join(" · ");
+
+  const teamEl = $("#team-list");
+  if (teamEl)
+    teamEl.innerHTML = COMPANY.equipo
+      .map((n) => {
+        const ini = n.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0]).join("");
+        return `<div class="team-member"><span class="ini">${ini}</span><span class="nm">${n}</span></div>`;
+      })
+      .join("");
+
+  /* ---------- Stats (cifras reales de la empresa) ---------- */
   const statsBand = $("#stats-band");
+  const añosOperando = new Date().getFullYear() - COMPANY.desde;
   const derived = [
+    { value: añosOperando, suffix: "", label: `Años de experiencia (desde ${COMPANY.desde})` },
+    { value: null, text: COMPANY.inmueblesVendidos, label: "Inmuebles vendidos" },
+    { value: null, text: COMPANY.familiasAtendidas, label: "Familias atendidas" },
     { value: PROPERTIES.length, suffix: "", label: "Propiedades disponibles" },
-    { value: null, text: "La Ceja", label: "Oriente Antioqueño" },
-    { value: null, text: "100%", label: "Fotografías e información oficiales" },
-    { value: null, text: "1 a 1", label: "Atención personalizada" },
   ];
   const allStats = STATS.length ? STATS : derived;
   statsBand.innerHTML = allStats
@@ -566,7 +584,7 @@
           <div class="fld full"><label for="${uid}-msg">Mensaje</label><textarea id="${uid}-msg" data-f="msg" rows="3" placeholder="Cuéntanos los detalles…"></textarea></div>
           <button type="submit" class="btn btn-magenta full">Enviar por WhatsApp</button>
         </div>
-        <p class="form-note">Al enviar se abre WhatsApp con tu solicitud lista para nuestro equipo. Tus datos solo se usan para atenderla.</p>
+        <p class="form-note">Al enviar se abre WhatsApp con tu solicitud lista para nuestro equipo. Tus datos solo se usan para atenderla y autorizas su tratamiento según nuestra <a href="legal.html#datos">política de tratamiento de datos personales</a>.</p>
         <p class="form-ok">✓ ¡Listo! Tu solicitud se abrió en WhatsApp. Te respondemos muy pronto.</p>
       </form>`;
 

@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=7" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=8" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -316,6 +316,7 @@
         <div class="about-copy rv" data-rv="right">
           <span class="kicker">Quiénes somos</span>
           <h2>Una inmobiliaria que lee tu estilo de vida</h2>
+          <p><strong>Operamos desde 2016</strong> en el Oriente Antioqueño. En estos años hemos acompañado la venta de <strong>más de 110 inmuebles</strong> y atendido a <strong>más de 250 familias</strong> en La Ceja, El Retiro, El Carmen de Viboral y Rionegro.</p>
           <p>REAL Bienes Raíces es una marca con una identidad clara: transmitir profesionalismo, conocimiento y respaldo en cada uno de sus servicios, generando confianza, seguridad y cercanía con sus usuarios.</p>
           <p>Somos reconocidos por saber leer el estilo de vida de nuestros clientes y ayudarles a hacer de sus sueños una realidad.</p>
           <div class="pillars">
@@ -327,6 +328,11 @@
             <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9C.8 8.6 2.6 5 6 5c2 0 3.5 1 4.5 2.5" /><path d="M12 21s7-4.5 9.5-9C23.2 8.6 21.4 5 18 5c-2 0-3.5 1-4.5 2.5"/></svg>Sueños cumplidos</div>
           </div>
         </div>
+      </div>
+
+      <div class="team rv">
+        <h3>Nuestro equipo</h3>
+        <div class="team-list" id="team-list"></div>
       </div>
     </div>
   </section>
@@ -440,9 +446,17 @@
             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
             <div><b>Instagram</b><span>@real.bienesraices</span></div>
           </a>
+          <a class="c-item" href="https://www.google.com/maps/search/?api=1&amp;query=CRA+17+%23+23-28+La+Ceja+Antioquia" target="_blank" rel="noopener">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <div><b>Oficina</b><span>CRA 17 # 23-28, La Ceja, Antioquia</span></div>
+          </a>
+          <div class="c-item">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+            <div><b>Horario de atención</b><span id="c-hours"></span></div>
+          </div>
           <div class="c-item">
             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
-            <div><b>Zona de cobertura</b><span>La Ceja, Antioquia — Oriente Antioqueño</span></div>
+            <div><b>Zona de cobertura</b><span id="c-coverage"></span></div>
           </div>
         </div>
 
@@ -499,19 +513,28 @@
           </ul>
         </div>
         <div>
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="legal.html#datos">Tratamiento de datos</a></li>
+            <li><a href="legal.html#privacidad">Privacidad</a></li>
+            <li><a href="legal.html#terminos">Términos y condiciones</a></li>
+            <li><a href="legal.html#cookies">Cookies</a></li>
+          </ul>
+        </div>
+        <div>
           <h4>Contacto</h4>
           <ul>
             <li><a href="tel:+573232273772">323 227 3772</a></li>
             <li><a href="tel:+573006924702">300 692 4702</a></li>
             <li><a href="mailto:realbienesraices.col@gmail.com">realbienesraices.col@gmail.com</a></li>
             <li><a href="https://www.instagram.com/real.bienesraices/" target="_blank" rel="noopener">@real.bienesraices</a></li>
-            <li>La Ceja, Antioquia</li>
+            <li>CRA 17 # 23-28, La Ceja</li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© <span id="year"></span> REAL Bienes Raíces. Todos los derechos reservados.</span>
-        <span>La Ceja · Oriente Antioqueño · Colombia</span>
+        <span>Yeny Zuleima Alzate Castaño · NIT 39191366-0 · La Ceja, Colombia</span>
       </div>
     </div>
   </footer>
@@ -526,7 +549,7 @@
 
   <div class="toast" id="toast" role="status"></div>
 
-  <script src="assets/js/data.js?v=7"></script>
-  <script src="assets/js/main.js?v=7"></script>
+  <script src="assets/js/data.js?v=8"></script>
+  <script src="assets/js/main.js?v=8"></script>
 </body>
 </html>

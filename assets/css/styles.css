@@ -1311,8 +1311,8 @@ a.c-item:hover { padding-left: 8px; }
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-  gap: 52px;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
+  gap: 42px;
   padding-bottom: 64px;
 }
 .footer .f-logo img { height: 84px; width: auto; }
@@ -1905,4 +1905,133 @@ a.c-item:hover { padding-left: 8px; }
   .owners-form { margin-top: 40px; }
   .lead-tabs { gap: 6px; }
   .lead-tabs button { padding: 8px 13px; font-size: 12.5px; }
+}
+
+/* ---------- Equipo (Nosotros) ---------- */
+.team { margin-top: 64px; text-align: center; }
+.team h3 {
+  font-size: 15px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  margin-bottom: 24px;
+}
+.team-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+.team-member {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px 10px 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--t-fast), box-shadow var(--t-fast), border-color var(--t-fast);
+}
+.team-member:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+  border-color: rgba(188,40,150,.3);
+}
+.team-member .ini {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: none;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, var(--teal), var(--teal-deep));
+}
+.team-member:hover .ini { background: linear-gradient(135deg, var(--magenta), var(--plum)); }
+.team-member .nm { font-size: 14.5px; font-weight: 600; color: var(--teal-deep); }
+
+/* ---------- Página legal ---------- */
+.legal-page { padding: 130px 0 90px; }
+.legal-page .container { max-width: 860px; }
+
+.legal-id {
+  margin: 26px 0 34px;
+  padding: 26px 28px;
+  border-radius: var(--r-lg);
+  background: var(--blush);
+  border: 1px solid var(--line);
+}
+.legal-id h2 {
+  font-size: 15px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  margin-bottom: 16px;
+}
+.legal-id dl { margin: 0; display: grid; gap: 12px; }
+.legal-id dl > div { display: grid; grid-template-columns: 220px 1fr; gap: 14px; }
+.legal-id dt { font-weight: 700; color: var(--teal-deep); font-size: 14.5px; }
+.legal-id dd { margin: 0; font-size: 14.5px; color: var(--ink); }
+.legal-id a { color: var(--magenta); font-weight: 600; }
+
+.legal-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 46px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+.legal-nav a {
+  padding: 8px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.legal-nav a:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+.legal-block { margin-bottom: 58px; scroll-margin-top: 100px; }
+.legal-block h2 {
+  font-size: 25px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--magenta);
+}
+.legal-block h3 {
+  font-size: 17px;
+  margin: 28px 0 10px;
+  color: var(--teal);
+}
+.legal-block p { margin: 0 0 14px; font-size: 15.5px; line-height: 1.7; color: var(--ink); }
+.legal-block ul { margin: 0 0 16px; padding-left: 22px; }
+.legal-block li { font-size: 15.5px; line-height: 1.7; margin-bottom: 7px; color: var(--ink); }
+.legal-block a { color: var(--magenta); font-weight: 600; text-decoration: underline; }
+.legal-block code {
+  background: var(--blush);
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.legal-data { list-style: none; padding-left: 0; }
+.legal-updated {
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+.form-note a { color: var(--magenta); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .legal-page { padding: 106px 0 70px; }
+  .legal-id { padding: 20px; }
+  .legal-id dl > div { grid-template-columns: 1fr; gap: 3px; }
+  .legal-block h2 { font-size: 21px; }
+  .team-list { flex-direction: column; align-items: stretch; }
+  .team-member { justify-content: flex-start; }
 }
