@@ -1,6 +1,7 @@
 /* REAL Bienes Raíces — página de información legal.
-   Los datos del responsable salen de LEGAL y CONTACT en data.js,
-   para que existan en un solo lugar. */
+   Los datos del responsable van fijos en el HTML a propósito: son el
+   contenido que da validez a la página y no deben depender del JS.
+   Aquí solo queda la interacción. */
 (() => {
   "use strict";
 
@@ -14,37 +15,9 @@
     if (el) el.href = WA;
   });
 
-  /* ---------- Identificación del responsable ---------- */
-  const filas = [
-    ["Razón social", LEGAL.razonSocial],
-    ["NIT", LEGAL.nit],
-    ["Responsable del tratamiento", LEGAL.responsable],
-    ["Dirección", LEGAL.direccion],
-    ["Correo electrónico", `<a href="mailto:${CONTACT.email}">${CONTACT.email}</a>`],
-    ["Teléfono / WhatsApp", `<a href="tel:+${CONTACT.whatsapp}">${CONTACT.phones[0]}</a>`],
-    ["Horario de atención", CONTACT.hours.map(([d, h]) => `${d}: ${h}`).join("<br>")],
-  ];
-
-  const idEl = $("#legal-id");
-  if (idEl)
-    idEl.innerHTML =
-      `<h2>Datos del responsable</h2><dl>` +
-      filas.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("") +
-      `</dl>`;
-
-  /* La misma tabla dentro del apartado 1.1 */
-  const respEl = $("#legal-resp");
-  if (respEl)
-    respEl.innerHTML = filas
-      .slice(0, 6)
-      .map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`)
-      .join("");
-
   /* ---------- Pie ---------- */
   const y = $("#year");
   if (y) y.textContent = new Date().getFullYear();
-  const fl = $("#footer-legal");
-  if (fl) fl.textContent = `${LEGAL.razonSocial} · NIT ${LEGAL.nit}`;
 
   const up = $("#legal-updated");
   if (up)

@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=8" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=9" />
 </head>
 <body>
 
@@ -54,7 +54,21 @@
         <p>Datos del responsable, tratamiento de datos personales, condiciones de uso del sitio y manejo de cookies.</p>
       </div>
 
-      <div class="legal-id" id="legal-id"></div>
+      <!-- Identificación del responsable: va fija en el HTML, no por JavaScript,
+           porque es el dato que da validez a esta página. -->
+      <div class="legal-id">
+        <h2>Datos del responsable</h2>
+        <dl>
+          <div><dt>Razón social</dt><dd>Yeny Zuleima Alzate Castaño</dd></div>
+          <div><dt>NIT</dt><dd>39191366-0</dd></div>
+          <div><dt>Responsable del tratamiento</dt><dd>Yeny Zuleima Alzate Castaño</dd></div>
+          <div><dt>Nombre comercial</dt><dd>REAL Bienes Raíces</dd></div>
+          <div><dt>Dirección</dt><dd>CRA 17 # 23-28, La Ceja, Antioquia, Colombia</dd></div>
+          <div><dt>Correo electrónico</dt><dd><a href="mailto:realbienesraices.col@gmail.com">realbienesraices.col@gmail.com</a></dd></div>
+          <div><dt>Teléfono / WhatsApp</dt><dd><a href="tel:+573232273772">323 227 3772</a></dd></div>
+          <div><dt>Horario de atención</dt><dd>Lunes a viernes: 9:00 a.m. – 1:00 p.m. y 2:00 p.m. – 6:00 p.m.<br>Sábados: 9:00 a.m. – 1:00 p.m.</dd></div>
+        </dl>
+      </div>
 
       <nav class="legal-nav" aria-label="Secciones legales">
         <a href="#datos">Tratamiento de datos personales</a>
@@ -71,7 +85,14 @@
           recolectada a través de este sitio web.</p>
 
         <h3>1.1. Responsable del tratamiento</h3>
-        <ul class="legal-data" id="legal-resp"></ul>
+        <ul class="legal-data">
+          <li><strong>Razón social:</strong> Yeny Zuleima Alzate Castaño</li>
+          <li><strong>NIT:</strong> 39191366-0</li>
+          <li><strong>Nombre comercial:</strong> REAL Bienes Raíces</li>
+          <li><strong>Dirección:</strong> CRA 17 # 23-28, La Ceja, Antioquia, Colombia</li>
+          <li><strong>Correo electrónico:</strong> <a href="mailto:realbienesraices.col@gmail.com">realbienesraices.col@gmail.com</a></li>
+          <li><strong>Teléfono / WhatsApp:</strong> <a href="tel:+573232273772">323 227 3772</a></li>
+        </ul>
 
         <h3>1.2. Datos que recolectamos</h3>
         <p>A través de los formularios de este sitio recolectamos únicamente los datos que el titular decide
@@ -279,7 +300,7 @@
       </div>
       <div class="footer-bottom">
         <span>© <span id="year"></span> REAL Bienes Raíces. Todos los derechos reservados.</span>
-        <span id="footer-legal"></span>
+        <span>Yeny Zuleima Alzate Castaño · NIT 39191366-0 · La Ceja, Colombia</span>
       </div>
     </div>
   </footer>
@@ -290,7 +311,7 @@
     </span>
   </a>
 
-  <script src="assets/js/data.js?v=8"></script>
-  <script src="assets/js/legal.js?v=8"></script>
+  <script src="assets/js/data.js?v=9"></script>
+  <script src="assets/js/legal.js?v=9"></script>
 </body>
 </html>
