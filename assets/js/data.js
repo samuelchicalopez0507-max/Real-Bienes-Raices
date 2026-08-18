@@ -8,6 +8,10 @@
    NN.jpg conservan la numeración original de wasi.
    ============================================================ */
 
+/* Dominio oficial. Se usa para armar URLs absolutas (canonical, og:image,
+   enlaces para compartir). Si el dominio cambia, se cambia aqui. */
+const SITE = "https://realbienesraices.com.co";
+
 const CONTACT = {
   brand: "REAL Bienes Raíces",
   whatsapp: "573232273772",
@@ -666,7 +670,13 @@ const priceLabel = (p) =>
 const waLink = (text) =>
   `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`;
 
+/* URL de la ficha en nuestro propio dominio (no la de wasi) */
+const propUrl = (p) => `${SITE}/propiedad.html?id=${p.id}`;
+
+/* Ruta absoluta de una foto, para og:image y datos estructurados */
+const absImg = (path) => `${SITE}/${path}`;
+
 const propWaLink = (p) =>
   waLink(
-    `Hola, REAL Bienes Raíces. Me interesa "${p.title}" (${priceLabel(p)}). ${p.link}`
+    `Hola, REAL Bienes Raíces. Me interesa "${p.title}" (código ${p.code}, ${priceLabel(p)}). ${propUrl(p)}`
   );

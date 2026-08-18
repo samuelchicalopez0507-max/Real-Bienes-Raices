@@ -54,7 +54,7 @@
   /* ---------- WhatsApp ---------- */
   const WA_PROP = propWaLink(prop);
   const WA_VISIT = waLink(
-    `Hola, REAL Bienes Raíces. Quiero agendar una visita a "${prop.title}" (${priceLabel(prop)}). ${prop.link}`
+    `Hola, REAL Bienes Raíces. Quiero agendar una visita a "${prop.title}" (código ${prop.code}, ${priceLabel(prop)}). ${propUrl(prop)}`
   );
   ["header-wa", "mobile-wa", "footer-wa", "wa-float"].forEach((id) => {
     const el = document.getElementById(id);
@@ -75,18 +75,27 @@
     m.setAttribute("property", p); m.setAttribute("content", v);
     document.head.appendChild(m);
   };
+  /* canonical y og deben ser absolutos: WhatsApp y Facebook no resuelven
+     rutas relativas al generar la vista previa. */
+  const PROP_URL = propUrl(prop);
+  const PROP_IMG = absImg(imgSrc(prop, prop.cover));
+  const can = document.createElement("link");
+  can.rel = "canonical"; can.href = PROP_URL;
+  document.head.appendChild(can);
+
   og("og:type", "article");
   og("og:title", document.title);
   og("og:description", desc);
-  og("og:image", imgSrc(prop, prop.cover));
+  og("og:url", PROP_URL);
+  og("og:image", PROP_IMG);
   const ld = document.createElement("script");
   ld.type = "application/ld+json";
   ld.textContent = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "RealEstateListing",
     name: prop.title,
-    url: location.href,
-    image: imgSrc(prop, prop.cover),
+    url: PROP_URL,
+    image: PROP_IMG,
     offers: prop.price != null ? { "@type": "Offer", price: prop.price, priceCurrency: "COP" } : undefined,
     address: { "@type": "PostalAddress", addressLocality: prop.city, addressRegion: "Antioquia", addressCountry: "CO" },
   });
@@ -284,9 +293,9 @@
               <button class="btn btn-outline" id="fav-btn" type="button">${I.heart} Guardar Favorito</button>
             </div>
             <div class="share-row">
-              <a href="https://wa.me/?text=${encodeURIComponent(prop.title + " — " + fmtCOP(prop.price) + " COP · " + prop.link)}" target="_blank" rel="noopener" aria-label="Compartir por WhatsApp">${I.wa}</a>
-              <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(prop.link)}" target="_blank" rel="noopener" aria-label="Compartir en Facebook">${I.fb}</a>
-              <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(prop.link)}" target="_blank" rel="noopener" aria-label="Compartir en LinkedIn">${I.in}</a>
+              <a href="https://wa.me/?text=${encodeURIComponent(prop.title + " — " + fmtCOP(prop.price) + " COP · " + PROP_URL)}" target="_blank" rel="noopener" aria-label="Compartir por WhatsApp">${I.wa}</a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(PROP_URL)}" target="_blank" rel="noopener" aria-label="Compartir en Facebook">${I.fb}</a>
+              <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(PROP_URL)}" target="_blank" rel="noopener" aria-label="Compartir en LinkedIn">${I.in}</a>
               <button type="button" id="copy-link" aria-label="Copiar enlace">${I.link}</button>
             </div>
           </div>
@@ -403,10 +412,10 @@
   /* copiar enlace */
   $("#copy-link").addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText(prop.link);
+      await navigator.clipboard.writeText(PROP_URL);
       notify("Enlace copiado ✓");
     } catch {
-      notify(prop.link);
+      notify(PROP_URL);
     }
   });
 
@@ -442,7 +451,7 @@
     if (!ok) return;
     const msg =
       `Hola, REAL Bienes Raíces. Soy ${$("#pf-name").value.trim()}.\n` +
-      `Me interesa: ${prop.title} (${fmtCOP(prop.price)} COP)\n${prop.link}\n` +
+      `Me interesa: ${prop.title} (código ${prop.code}, ${fmtCOP(prop.price)} COP)\n${PROP_URL}\n` +
       `Teléfono: ${$("#pf-phone").value.trim()}\nCorreo: ${$("#pf-email").value.trim()}\n\n` +
       $("#pf-msg").value.trim();
     window.open(waLink(msg), "_blank", "noopener");
