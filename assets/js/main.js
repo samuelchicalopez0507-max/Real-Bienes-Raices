@@ -263,7 +263,7 @@
     .normalize("NFD").replace(/[̀-ͯ]/g, "");
   PROPERTIES.forEach((p) => {
     p._search = norm([
-      p.title, p.type, p.city, p.sector, p.operation === "arriendo" ? "arriendo alquiler" : "venta comprar",
+      p.code, p.title, p.type, p.city, p.sector, p.operation === "arriendo" ? "arriendo alquiler" : "venta comprar",
       p.tags.join(" "), (p.internas || []).join(" "), (p.externas || []).join(" "),
       p.desc, p.rooms != null ? p.rooms + " habitaciones alcobas" : "",
       p.baths != null ? p.baths + " banos" : "",
