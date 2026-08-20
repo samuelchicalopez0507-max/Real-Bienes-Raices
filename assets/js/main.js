@@ -442,10 +442,16 @@
   const teamEl = $("#team-list");
   if (teamEl)
     teamEl.innerHTML = COMPANY.equipo
-      .map((n) => {
-        const ini = n.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0]).join("");
-        return `<div class="team-member"><span class="ini">${ini}</span><span class="nm">${n}</span></div>`;
-      })
+      .map(
+        (m) => `
+      <figure class="team-member">
+        <img src="assets/img/team/${m.foto}.jpg" alt="${m.nombre} — REAL Bienes Raíces" loading="lazy" width="640" height="800" />
+        <figcaption>
+          <span class="nm">${m.nombre}</span>
+          ${m.cargo ? `<span class="rol">${m.cargo}</span>` : ""}
+        </figcaption>
+      </figure>`
+      )
       .join("");
 
   /* ---------- Stats (cifras reales de la empresa) ---------- */

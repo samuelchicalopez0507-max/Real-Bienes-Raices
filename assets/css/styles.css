@@ -1908,49 +1908,58 @@ a.c-item:hover { padding-left: 8px; }
 }
 
 /* ---------- Equipo (Nosotros) ---------- */
-.team { margin-top: 64px; text-align: center; }
+.team { margin-top: 72px; }
 .team h3 {
   font-size: 15px;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--magenta);
-  margin-bottom: 24px;
+  margin-bottom: 26px;
+  text-align: center;
 }
 .team-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
 }
 .team-member {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 20px 10px 10px;
-  border-radius: 999px;
+  margin: 0;
+  border-radius: var(--r-lg);
+  overflow: hidden;
   background: #fff;
   border: 1px solid var(--line);
   box-shadow: var(--shadow-xs);
-  transition: transform var(--t-fast), box-shadow var(--t-fast), border-color var(--t-fast);
+  transition: transform var(--t-med), box-shadow var(--t-med), border-color var(--t-med);
 }
 .team-member:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
   border-color: rgba(188,40,150,.3);
 }
-.team-member .ini {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  flex: none;
-  font-size: 13px;
-  font-weight: 800;
-  color: #fff;
-  background: linear-gradient(135deg, var(--teal), var(--teal-deep));
+.team-member img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
-.team-member:hover .ini { background: linear-gradient(135deg, var(--magenta), var(--plum)); }
-.team-member .nm { font-size: 14.5px; font-weight: 600; color: var(--teal-deep); }
+.team-member figcaption {
+  padding: 16px 16px 18px;
+  text-align: center;
+}
+.team-member .nm {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--teal-deep);
+  line-height: 1.3;
+}
+.team-member .rol {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
 
 /* ---------- Página legal ---------- */
 .legal-page { padding: 130px 0 90px; }
@@ -2032,6 +2041,6 @@ a.c-item:hover { padding-left: 8px; }
   .legal-id { padding: 20px; }
   .legal-id dl > div { grid-template-columns: 1fr; gap: 3px; }
   .legal-block h2 { font-size: 21px; }
-  .team-list { flex-direction: column; align-items: stretch; }
-  .team-member { justify-content: flex-start; }
+  .team-list { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .team-member .nm { font-size: 14px; }
 }

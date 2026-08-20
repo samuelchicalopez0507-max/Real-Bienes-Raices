@@ -40,11 +40,13 @@ const COMPANY = {
   municipios: ["La Ceja", "El Retiro", "El Carmen de Viboral", "Rionegro"],
   inmueblesVendidos: "+110",
   familiasAtendidas: "+250",
+  /* foto = archivo en assets/img/team/<foto>.jpg
+     cargo es opcional: si esta vacio, la tarjeta muestra solo el nombre */
   equipo: [
-    "Yeny Zuleima Alzate Castaño",
-    "Yuli Bibiana Ríos",
-    "Milady Tatiana González Morales",
-    "Jairo Alonso Londoño Alzate",
+    { nombre: "Yeny Zuleima Alzate Castaño", foto: "yeni", cargo: "" },
+    { nombre: "Jairo Alonso Londoño Alzate", foto: "jairo", cargo: "" },
+    { nombre: "Yuli Bibiana Ríos", foto: "bibiana", cargo: "" },
+    { nombre: "Milady Tatiana González Morales", foto: "tatiana", cargo: "" },
   ],
 };
 
