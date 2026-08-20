@@ -445,7 +445,7 @@
       .map(
         (m) => `
       <figure class="team-member">
-        <img src="assets/img/team/${m.foto}.jpg" alt="${m.nombre} — REAL Bienes Raíces" loading="lazy" width="640" height="800" />
+        <img src="assets/img/team/${m.foto}.jpg?v=14" alt="${m.nombre} — REAL Bienes Raíces" loading="lazy" width="640" height="800" />
         <figcaption>
           <span class="nm">${m.nombre}</span>
           ${m.cargo ? `<span class="rol">${m.cargo}</span>` : ""}
