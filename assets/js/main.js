@@ -388,6 +388,15 @@
     })
   );
 
+  /* Comprar/Arrendar desde otra página llegan como index.html?op=venta#propiedades:
+     aplicamos el filtro al cargar para que el catálogo abra ya filtrado. */
+  const opInicial = new URLSearchParams(location.search).get("op");
+  if (opInicial === "venta" || opInicial === "arriendo") {
+    F.op.value = opInicial;
+    applyFilters();
+    setTimeout(() => $("#propiedades").scrollIntoView({ behavior: "smooth" }), 120);
+  }
+
   /* ---------- Procesos: compra (sección general) y venta (sección propietarios) ---------- */
   const stepsHtml = (steps) =>
     steps
