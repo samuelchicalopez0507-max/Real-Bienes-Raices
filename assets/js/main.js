@@ -258,6 +258,57 @@
   fillSelect($("#hs-type"), types);
   fillSelect($("#hs-city"), cities);
 
+  /* ---------- Escala de precios segun la operacion ----------
+     Un arriendo cuesta millones al mes; una venta, cientos de millones.
+     Con una sola escala, elegir "Arrendar" + cualquier precio daba cero
+     resultados. Los rangos se reconstruyen al cambiar de operacion. */
+  const ESCALA = {
+    venta: {
+      etiqueta: "Precio",
+      min: [[300000000, "$300 millones"], [500000000, "$500 millones"], [700000000, "$700 millones"],
+            [1000000000, "$1.000 millones"], [1500000000, "$1.500 millones"]],
+      max: [[400000000, "$400 millones"], [600000000, "$600 millones"], [800000000, "$800 millones"],
+            [1000000000, "$1.000 millones"], [1500000000, "$1.500 millones"], [3000000000, "$3.000 millones"]],
+      hero: [["0-650000000", "Hasta $650 millones"], ["650000000-800000000", "$650 – $800 millones"],
+             ["800000000-99999999999", "Más de $800 millones"]],
+    },
+    arriendo: {
+      etiqueta: "Canon mensual",
+      min: [[1000000, "$1 millón"], [2000000, "$2 millones"], [3000000, "$3 millones"],
+            [5000000, "$5 millones"], [10000000, "$10 millones"]],
+      max: [[2000000, "$2 millones"], [3000000, "$3 millones"], [5000000, "$5 millones"],
+            [10000000, "$10 millones"], [20000000, "$20 millones"]],
+      hero: [["0-2000000", "Hasta $2 millones"], ["2000000-5000000", "$2 – $5 millones"],
+             ["5000000-99999999999", "Más de $5 millones"]],
+    },
+  };
+
+  /* Reconstruye los selectores de precio. Si cambia la escala, limpia lo
+     elegido antes: un valor de venta no tiene sentido en arriendo. */
+  let escalaActual = "venta";
+  const aplicarEscala = (op) => {
+    const clave = op === "arriendo" ? "arriendo" : "venta";
+    if (clave === escalaActual) return;
+    escalaActual = clave;
+    const e = ESCALA[clave];
+
+    const poblar = (sel, pares, primera) => {
+      if (!sel) return;
+      sel.innerHTML = `<option value="">${primera}</option>` +
+        pares.map(([v, t]) => `<option value="${v}">${t}</option>`).join("");
+      sel.value = "";
+    };
+    poblar(F.min, e.min, clave === "arriendo" ? "Sin mínimo" : "Sin mínimo");
+    poblar(F.max, e.max, "Sin máximo");
+    poblar($("#hs-price"), e.hero, "Cualquiera");
+
+    /* las etiquetas tambien cambian, para que se entienda que es mensual */
+    const lblMin = $('label[for="f-min"]'), lblMax = $('label[for="f-max"]'), lblHero = $('label[for="hs-price"]');
+    if (lblMin) lblMin.textContent = clave === "arriendo" ? "Canon mínimo" : "Precio mínimo";
+    if (lblMax) lblMax.textContent = clave === "arriendo" ? "Canon máximo" : "Precio máximo";
+    if (lblHero) lblHero.textContent = e.etiqueta;
+  };
+
   /* texto buscable por propiedad (memoizado) */
   const norm = (s) => (s || "").toString().toLowerCase()
     .normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -279,6 +330,7 @@
 
   const applyFilters = (resetPage = true) => {
     if (resetPage) shown = PAGE;
+    aplicarEscala(F.op.value);
     const q = norm(search.value.trim());
     searchClear.hidden = !search.value;
     let list = PROPERTIES.filter((p) => {
@@ -350,6 +402,7 @@
       $$(".ops button", heroSearch).forEach((x) => x.classList.remove("on"));
       b.classList.add("on");
       heroOp = b.dataset.op;
+      aplicarEscala(heroOp);
     })
   );
   heroSearch.addEventListener("submit", (e) => {
@@ -383,6 +436,7 @@
   $$("a[data-op]").forEach((a) =>
     a.addEventListener("click", () => {
       F.op.value = a.dataset.op;
+      aplicarEscala(a.dataset.op);
       applyFilters();
       setTimeout(() => $("#propiedades").scrollIntoView({ behavior: "smooth" }), 60);
     })
@@ -393,6 +447,10 @@
   const opInicial = new URLSearchParams(location.search).get("op");
   if (opInicial === "venta" || opInicial === "arriendo") {
     F.op.value = opInicial;
+    aplicarEscala(opInicial);
+    /* el buscador del hero debe reflejar la misma operacion */
+    const btnHero = $(`#hero-search .ops button[data-op="${opInicial}"]`);
+    if (btnHero) { $$("#hero-search .ops button").forEach((x) => x.classList.remove("on")); btnHero.classList.add("on"); heroOp = opInicial; }
     applyFilters();
     setTimeout(() => $("#propiedades").scrollIntoView({ behavior: "smooth" }), 120);
   }
