@@ -2044,3 +2044,166 @@ a.c-item:hover { padding-left: 8px; }
   .team-list { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .team-member .nm { font-size: 14px; }
 }
+
+/* ---------- Consentimiento de cookies ---------- */
+.ck-banner {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 300;
+  background: #fff;
+  border-top: 3px solid var(--magenta);
+  box-shadow: 0 -10px 40px rgba(23, 52, 58, .18);
+  animation: ckUp 400ms cubic-bezier(.22, 1, .36, 1) both;
+}
+@keyframes ckUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.ck-banner-in {
+  width: min(var(--container), calc(100% - 48px));
+  margin-inline: auto;
+  padding: 22px 0;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.ck-txt h2 {
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+.ck-txt p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 70ch;
+}
+.ck-txt a { color: var(--magenta); font-weight: 600; text-decoration: underline; }
+.ck-btns { display: flex; gap: 10px; flex: none; flex-wrap: wrap; }
+
+.ck-b {
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1.5px solid transparent;
+  transition: transform var(--t-fast), box-shadow var(--t-fast),
+              background var(--t-fast), color var(--t-fast);
+  white-space: nowrap;
+}
+.ck-b:hover { transform: translateY(-2px); }
+/* Aceptar y rechazar pesan lo mismo a propósito: el consentimiento
+   debe ser tan fácil de negar como de dar. */
+.ck-pri { background: var(--magenta); color: #fff; box-shadow: var(--shadow-magenta); }
+.ck-sec { background: var(--teal); color: #fff; }
+.ck-ghost { background: transparent; color: var(--teal-deep); border-color: var(--line); }
+.ck-ghost:hover { border-color: var(--teal); }
+
+.ck-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 310;
+  background: rgba(23, 52, 58, .55);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  animation: ckFade 220ms ease both;
+}
+@keyframes ckFade { from { opacity: 0; } to { opacity: 1; } }
+.ck-card {
+  width: min(640px, 100%);
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  animation: cardIn 320ms cubic-bezier(.22, 1, .36, 1) both;
+}
+.ck-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 26px;
+  border-bottom: 1px solid var(--line);
+}
+.ck-head h2 { font-size: 20px; }
+.ck-x {
+  width: 36px; height: 36px;
+  border: 0; border-radius: 50%;
+  background: var(--blush);
+  display: grid; place-items: center;
+  color: var(--teal-deep);
+}
+.ck-x svg { width: 17px; height: 17px; }
+.ck-body { padding: 8px 26px 4px; overflow-y: auto; }
+.ck-cat { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.ck-cat:last-of-type { border-bottom: 0; }
+.ck-cat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 7px;
+}
+.ck-cat h3 { font-size: 16px; }
+.ck-cat p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
+.ck-fija {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--teal);
+  background: var(--blush);
+  padding: 5px 12px;
+  border-radius: 999px;
+  flex: none;
+}
+/* interruptor */
+.ck-sw { position: relative; flex: none; cursor: pointer; }
+.ck-sw input { position: absolute; opacity: 0; width: 46px; height: 26px; margin: 0; cursor: pointer; }
+.ck-sr {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+.ck-sl {
+  display: block;
+  width: 46px; height: 26px;
+  border-radius: 999px;
+  background: #c9d2d4;
+  position: relative;
+  transition: background var(--t-fast);
+}
+.ck-sl::after {
+  content: "";
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform var(--t-fast);
+}
+.ck-sw input:checked + .ck-sl { background: var(--magenta); }
+.ck-sw input:checked + .ck-sl::after { transform: translateX(20px); }
+.ck-sw input:focus-visible + .ck-sl { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+.ck-legal { font-size: 13px; color: var(--ink-soft); padding: 16px 0 4px; margin: 0; }
+.ck-legal a { color: var(--magenta); font-weight: 600; text-decoration: underline; }
+.ck-foot {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 18px 26px;
+  border-top: 1px solid var(--line);
+  background: var(--blush);
+}
+
+@media (max-width: 900px) {
+  .ck-banner-in { flex-direction: column; align-items: stretch; gap: 18px; padding: 20px 0; }
+  .ck-btns { justify-content: stretch; }
+  .ck-btns .ck-b { flex: 1 1 auto; text-align: center; }
+}
+@media (max-width: 640px) {
+  .ck-banner-in { width: calc(100% - 32px); }
+  .ck-btns { flex-direction: column; }
+  .ck-modal { padding: 12px; }
+  .ck-head, .ck-body, .ck-foot { padding-inline: 18px; }
+  .ck-foot { flex-direction: column-reverse; }
+  .ck-foot .ck-b { width: 100%; }
+}
