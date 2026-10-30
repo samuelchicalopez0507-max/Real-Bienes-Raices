@@ -57,28 +57,42 @@
   );
   sections.forEach((s) => navObs.observe(s));
 
-  /* ---------- Hero: slideshow cinematográfico con las mejores fachadas ---------- */
+  /* ---------- Hero: slideshow cinematográfico con las mejores fachadas ----------
+     Las 5 fotos viven en assets/img/hero/ en WebP y en dos tamaños. Antes se
+     servían los JPG originales a tamaño completo (272-346 KB cada uno) y las
+     cinco se cargaban de entrada: casi 1,4 MB antes de ver nada.
+     Ahora solo la primera carga de inmediato; las otras cuatro esperan a que
+     la página termine de cargar. */
   const byId = (id) => PROPERTIES.find((p) => p.id === id);
-  const HERO_SHOTS = [
-    [byId("p35"), 1],  // casa campestre de lujo — drone
-    [byId("p31"), 17], // Llanogrande — fachada moderna
-    [byId("p36"), 25], // finca urbana — aérea + jardín
-    [byId("p40"), 1],  // finca 6.060 m² — drone
-    [byId("p24"), 9],  // casa con vista al paisaje
-  ].filter(([p]) => p).map(([p, i]) => imgSrc(p, i));
+  const HERO_N = 5;
+  const chico = () => window.matchMedia("(max-width: 820px)").matches;
+  const heroSrc = (n) => `assets/img/hero/hero-${n}${chico() ? "-sm" : ""}.webp`;
+
   const heroBg = $("#hero-bg");
-  HERO_SHOTS.forEach((src, i) => {
+  for (let i = 0; i < HERO_N; i++) {
     const d = document.createElement("div");
     d.className = "slide" + (i === 0 ? " on" : "");
-    d.style.backgroundImage = `url("${src}")`;
+    if (i === 0) d.style.backgroundImage = `url("${heroSrc(1)}")`;
+    else d.dataset.bg = heroSrc(i + 1);
     heroBg.appendChild(d);
-  });
+  }
+  /* Cada slide se descarga justo antes de que le toque aparecer, no todas de
+     golpe: quien mire el hero diez segundos baja dos fotos, no cinco. */
+  const cargarSlide = (k) => {
+    const d = $$(".slide", heroBg)[k];
+    if (d && d.dataset.bg) { d.style.backgroundImage = `url("${d.dataset.bg}")`; delete d.dataset.bg; }
+  };
+  /* la segunda queda lista en tiempo muerto, para que el primer cambio no parpadee */
+  if ("requestIdleCallback" in window) requestIdleCallback(() => cargarSlide(1), { timeout: 4000 });
+  else window.addEventListener("load", () => setTimeout(() => cargarSlide(1), 1200));
   let heroIdx = 0;
   setInterval(() => {
     const slides = $$(".slide", heroBg);
     slides[heroIdx].classList.remove("on");
     heroIdx = (heroIdx + 1) % slides.length;
+    cargarSlide(heroIdx);                       // por si aun no estaba
     slides[heroIdx].classList.add("on");
+    cargarSlide((heroIdx + 1) % slides.length); // deja lista la siguiente
   }, 7000);
 
   /* parallax sutil */
@@ -91,10 +105,23 @@
     { passive: true }
   );
 
-  /* fondos de las bandas CTA (mejores exteriores) */
-  const cta1 = $("#cta1-bg"), cta2 = $("#cta2-bg");
-  if (cta1 && byId("p36")) cta1.style.backgroundImage = `url("${imgSrc(byId("p36"), 18)}")`;
-  if (cta2 && byId("p35")) cta2.style.backgroundImage = `url("${imgSrc(byId("p35"), 2)}")`;
+  /* Fondos de las bandas CTA. Están muy por debajo del pliegue, así que se
+     cargan solo cuando el visitante se acerca a ellas. */
+  const bgObs = new IntersectionObserver(
+    (es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      if (el.dataset.bg) { el.style.backgroundImage = `url("${el.dataset.bg}")`; delete el.dataset.bg; }
+      bgObs.unobserve(el);
+    }),
+    { rootMargin: "300px 0px" }
+  );
+  [["#cta1-bg", "cta-1"], ["#cta2-bg", "cta-2"]].forEach(([sel, slug]) => {
+    const el = $(sel);
+    if (!el) return;
+    el.dataset.bg = `assets/img/hero/${slug}${chico() ? "-sm" : ""}.webp`;
+    bgObs.observe(el);
+  });
 
   /* ---------- Reveal on scroll ---------- */
   const rvObs = new IntersectionObserver(
@@ -143,10 +170,7 @@
   const cardHtml = (p) => {
     const imgs = cardImages(p);
     const slides = imgs
-      .map(
-        (i, k) =>
-          `<div ${k === 0 ? `style="background-image:url('${imgSrc(p, i, true)}')"` : `data-bg="${imgSrc(p, i, true)}"`}></div>`
-      )
+      .map((i, k) => `<div data-bg="${imgSrc(p, i, true)}"${k === 0 ? ' data-cover="1"' : ""}></div>`)
       .join("");
     const dots = imgs.map((_, k) => `<i class="${k === 0 ? "on" : ""}"></i>`).join("");
     const tags = p.tags
@@ -176,6 +200,22 @@
       </div>
     </article>`;
   };
+
+  /* Portadas de las tarjetas: se pintan cuando la tarjeta se acerca al
+     viewport, no al construir el HTML. */
+  const coverObs = new IntersectionObserver(
+    (es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const slide = e.target.querySelector('.car-track > [data-cover]');
+      if (slide && slide.dataset.bg) {
+        slide.style.backgroundImage = `url('${slide.dataset.bg}')`;
+        delete slide.dataset.bg;
+      }
+      coverObs.unobserve(e.target);
+    }),
+    { rootMargin: "400px 0px" }
+  );
+  const watchCovers = (root = document) => $$(".prop-card", root).forEach((c) => coverObs.observe(c));
 
   /* carrusel de tarjeta */
   const initCarousel = (card) => {
@@ -223,6 +263,7 @@
   const renderCards = (host, list) => {
     host.innerHTML = list.map(cardHtml).join("");
     $$(".prop-card", host).forEach(initCarousel);
+    watchCovers(host);
   };
 
   /* destacadas */
@@ -503,7 +544,7 @@
       .map(
         (m) => `
       <figure class="team-member">
-        <img src="assets/img/team/${m.foto}.jpg?v=15" alt="${m.nombre} — REAL Bienes Raíces" loading="lazy" width="640" height="800" />
+        <img src="assets/img/team/${m.foto}.webp" alt="${m.nombre} — REAL Bienes Raíces" loading="lazy" width="640" height="800" />
         <figcaption>
           <span class="nm">${m.nombre}</span>
           ${m.cargo ? `<span class="rol">${m.cargo}</span>` : ""}

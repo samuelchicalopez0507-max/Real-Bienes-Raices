@@ -40,7 +40,7 @@ const COMPANY = {
   municipios: ["La Ceja", "El Retiro", "El Carmen de Viboral", "Rionegro"],
   inmueblesVendidos: "+110",
   familiasAtendidas: "+250",
-  /* foto = archivo en assets/img/team/<foto>.jpg
+  /* foto = archivo en assets/img/team/<foto>.webp
      cargo es opcional: si esta vacio, la tarjeta muestra solo el nombre */
   equipo: [
     { nombre: "Yeny Zuleima Alzate Castaño", foto: "yeni", cargo: "" },
