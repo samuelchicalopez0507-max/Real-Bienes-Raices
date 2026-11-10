@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>REAL Bienes Raíces — Inmobiliaria en La Ceja, Oriente Antioqueño</title>
-  <meta name="description" content="REAL Bienes Raíces: propiedades en venta en La Ceja y el Oriente Antioqueño. Asesoría personalizada y acompañamiento integral para comprar, vender o arrendar tu inmueble con total confianza." />
+  <meta name="description" content="Inmobiliaria en La Ceja, Antioquia. Casas, apartamentos, fincas y lotes en venta y arriendo en el Oriente Antioqueño. Te acompañamos en todo el proceso." />
   <link rel="canonical" href="https://realbienesraices.com.co/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="REAL Bienes Raíces — Inmobiliaria en La Ceja, Oriente Antioqueño" />
@@ -18,6 +18,8 @@
   <meta name="twitter:title" content="REAL Bienes Raíces — Inmobiliaria en La Ceja" />
   <meta name="twitter:description" content="Más que vender propiedades, conectamos personas con el hogar ideal." />
   <meta name="twitter:image" content="https://realbienesraices.com.co/assets/img/props/p01/22.jpg" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta property="og:site_name" content="REAL Bienes Raíces" />
   <meta name="google-site-verification" content="bjFq9TBYkfRwJRwXA7MbjzeNzDAhgfya2T8xA4Wbf5Y" />
   <meta name="theme-color" content="#2d626c" />
   <link rel="icon" type="image/svg+xml" href="assets/img/icon.svg" />
@@ -29,25 +31,161 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=19" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=20" />
+  <!-- Datos estructurados. Describen el negocio, el sitio y las preguntas
+       frecuentes en el formato que Google entiende. Las coordenadas y el
+       enlace del mapa son los de la ficha real del negocio en Google Maps:
+       deben coincidir con lo que diga la ficha, si no, Google desconfia. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "RealEstateAgent",
-    "name": "REAL Bienes Raíces",
-    "email": "realbienesraices.col@gmail.com",
-    "telephone": "+57 323 227 3772",
-    "areaServed": "La Ceja, Antioquia, Colombia",
-    "sameAs": ["https://www.instagram.com/real.bienesraices/"],
-    "url": "https://realbienesraices.com.co/",
-    "logo": "https://realbienesraices.com.co/assets/img/logo.svg",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "CRA 17 # 23-28",
-      "addressLocality": "La Ceja",
-      "addressRegion": "Antioquia",
-      "addressCountry": "CO"
-    }
+    "@graph": [
+      {
+        "@type": ["RealEstateAgent", "LocalBusiness"],
+        "@id": "https://realbienesraices.com.co/#negocio",
+        "name": "REAL Bienes Raíces",
+        "alternateName": "Inmobiliaria Real Bienes Raices",
+        "description": "Inmobiliaria en La Ceja, Antioquia. Venta y arriendo de casas, apartamentos, fincas, lotes y locales en el Oriente Antioqueño, con acompañamiento en todo el proceso.",
+        "url": "https://realbienesraices.com.co/",
+        "logo": "https://realbienesraices.com.co/assets/img/logo.svg",
+        "image": "https://realbienesraices.com.co/assets/img/hero/hero-1.webp",
+        "email": "realbienesraices.col@gmail.com",
+        "telephone": "+573232273772",
+        "foundingDate": "2016",
+        "priceRange": "$$",
+        "currenciesAccepted": "COP",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "CRA 17 # 23-28",
+          "addressLocality": "La Ceja",
+          "addressRegion": "Antioquia",
+          "addressCountry": "CO"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 6.0328971,
+          "longitude": -75.4278427
+        },
+        "hasMap": "https://www.google.com/maps?cid=13249980483052560187",
+        "areaServed": [
+          { "@type": "City", "name": "La Ceja" },
+          { "@type": "City", "name": "El Retiro" },
+          { "@type": "City", "name": "El Carmen de Viboral" },
+          { "@type": "City", "name": "Rionegro" }
+        ],
+        "sameAs": ["https://www.instagram.com/real.bienesraices/"],
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "13:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "14:00",
+            "closes": "18:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "09:00",
+            "closes": "13:00"
+          }
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Servicios inmobiliarios",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Compra de vivienda",
+                "description": "Buscamos la propiedad que se ajusta a tu estilo de vida y te acompañamos hasta la entrega.",
+                "serviceType": "Asesoría de compra de vivienda",
+                "areaServed": "La Ceja, Antioquia, Colombia"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Venta de tu inmueble",
+                "description": "Publicamos, promovemos y gestionamos la venta de tu propiedad.",
+                "serviceType": "Intermediación en venta de inmuebles",
+                "areaServed": "La Ceja, Antioquia, Colombia"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Arriendo de inmuebles",
+                "description": "Gestionamos el arriendo de casas, apartamentos y locales en el Oriente Antioqueño.",
+                "serviceType": "Intermediación en arriendo de inmuebles",
+                "areaServed": "La Ceja, Antioquia, Colombia"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Asesoría y acompañamiento",
+                "description": "Resolvemos dudas y orientamos durante todo el proceso, con cercanía y transparencia.",
+                "serviceType": "Asesoría inmobiliaria",
+                "areaServed": "La Ceja, Antioquia, Colombia"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://realbienesraices.com.co/#sitio",
+        "url": "https://realbienesraices.com.co/",
+        "name": "REAL Bienes Raíces",
+        "inLanguage": "es-CO",
+        "publisher": { "@id": "https://realbienesraices.com.co/#negocio" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://realbienesraices.com.co/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Cómo agendo una visita a una propiedad?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Escríbenos por WhatsApp al 323 227 3772 o usa el botón «Agendar Visita» en cualquier propiedad. Coordinamos contigo el día y la hora." }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué zonas cubren?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Trabajamos en La Ceja y el Oriente Antioqueño. Todo nuestro portafolio actual se encuentra en esta zona." }
+          },
+          {
+            "@type": "Question",
+            "name": "¿La información de las propiedades es verificada?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sí. Cada propiedad publicada corresponde a la información y fotografías oficiales de nuestro inventario." }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Me acompañan durante todo el proceso de compra?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sí. Te acompañamos desde la primera visita hasta la entrega del inmueble, resolviendo tus dudas en cada paso." }
+          },
+          {
+            "@type": "Question",
+            "name": "Quiero vender mi propiedad, ¿qué debo hacer?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Contáctanos por WhatsApp o a través del formulario. Un asesor conocerá tu propiedad y te explicará el proceso de publicación y venta." }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Atienden por WhatsApp?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sí, es nuestro canal más rápido: 323 227 3772. También puedes llamarnos al 300 692 4702." }
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>
@@ -461,7 +599,7 @@
             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
             <div><b>Instagram</b><span>@real.bienesraices</span></div>
           </a>
-          <a class="c-item" href="https://www.google.com/maps/search/?api=1&amp;query=CRA+17+%23+23-28+La+Ceja+Antioquia" target="_blank" rel="noopener">
+          <a class="c-item" href="https://www.google.com/maps?cid=13249980483052560187" target="_blank" rel="noopener">
             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
             <div><b>Oficina</b><span>CRA 17 # 23-28, La Ceja, Antioquia</span></div>
           </a>
@@ -566,8 +704,8 @@
 
   <div class="toast" id="toast" role="status"></div>
 
-  <script src="assets/js/cookies.js?v=19"></script>
-  <script src="assets/js/data.js?v=19"></script>
-  <script src="assets/js/main.js?v=19"></script>
+  <script src="assets/js/cookies.js?v=20"></script>
+  <script src="assets/js/data.js?v=20"></script>
+  <script src="assets/js/main.js?v=20"></script>
 </body>
 </html>

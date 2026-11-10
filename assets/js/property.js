@@ -13,9 +13,9 @@
      mostrar otra propiedad distinta sin ninguna explicación. */
   if (!prop) {
     document.title = "Propiedad no disponible — REAL Bienes Raíces";
-    const nx = document.createElement("meta");
-    nx.name = "robots"; nx.content = "noindex";
-    document.head.appendChild(nx);
+    const nx = $('meta[name="robots"]') || document.head.appendChild(
+      Object.assign(document.createElement("meta"), { name: "robots" }));
+    nx.setAttribute("content", "noindex, follow");
 
     const wa = waLink("Hola, REAL Bienes Raíces. Vi una propiedad que ya no está disponible y quisiera conocer opciones similares.");
     ["header-wa", "mobile-wa", "footer-wa", "wa-float"].forEach((id) => {
@@ -68,7 +68,7 @@
     (areaMain ? `${areaMain} m²` : "") +
     (prop.rooms ? `, ${prop.rooms} alcobas` : "") +
     (prop.baths ? `, ${prop.baths} baños` : "") +
-    `. ${priceLabel(prop)}. REAL Bienes Raíces.`;
+    `. ${priceLabel(prop)}. Código ${prop.code}. REAL Bienes Raíces.`;
   $('meta[name="description"]').setAttribute("content", desc);
   const og = (p, v) => {
     const m = document.createElement("meta");
@@ -88,17 +88,93 @@
   og("og:description", desc);
   og("og:url", PROP_URL);
   og("og:image", PROP_IMG);
+  const tw = (n, v) => {
+    const m = document.createElement("meta");
+    m.setAttribute("name", n); m.setAttribute("content", v);
+    document.head.appendChild(m);
+  };
+  tw("twitter:title", document.title);
+  tw("twitter:description", desc);
+  tw("twitter:image", PROP_IMG);
+  /* Datos estructurados del inmueble. Le dicen al buscador que esto es un
+     aviso inmobiliario y no un texto cualquiera: tipo, área, alcobas, baños,
+     precio y a quién pertenece. También la ruta de migas, para que en los
+     resultados aparezca "Inicio > Propiedades > ..." en vez de la URL cruda. */
+  const TIPO_SCHEMA = {
+    Casa: "SingleFamilyResidence",
+    Finca: "House",
+    Apartamento: "Apartment",
+    Apartaestudio: "Apartment",
+    "Dúplex": "Apartment",
+    Lote: "Place",
+  };
+  const cantidad = (v, unidad) =>
+    v ? { "@type": "QuantitativeValue", value: v, unitCode: unidad } : undefined;
+
   const ld = document.createElement("script");
   ld.type = "application/ld+json";
-  ld.textContent = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "RealEstateListing",
-    name: prop.title,
-    url: PROP_URL,
-    image: PROP_IMG,
-    offers: prop.price != null ? { "@type": "Offer", price: prop.price, priceCurrency: "COP" } : undefined,
-    address: { "@type": "PostalAddress", addressLocality: prop.city, addressRegion: "Antioquia", addressCountry: "CO" },
-  });
+  ld.textContent = JSON.stringify(
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "RealEstateListing",
+          "@id": `${PROP_URL}#aviso`,
+          url: PROP_URL,
+          name: prop.title,
+          description: (prop.desc || desc).slice(0, 900),
+          image: PROP_IMG,
+          inLanguage: "es-CO",
+          about: {
+            "@type": TIPO_SCHEMA[prop.type] || "Accommodation",
+            name: prop.title,
+            numberOfRooms: prop.rooms || undefined,
+            numberOfBathroomsTotal: prop.baths || undefined,
+            floorSize: cantidad(prop.area, "MTK"),
+            lotSize: cantidad(prop.areaLote, "MTK"),
+            yearBuilt: prop.year || undefined,
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: prop.city,
+              addressRegion: "Antioquia",
+              addressCountry: "CO",
+            },
+          },
+          offers:
+            prop.price != null
+              ? {
+                  "@type": "Offer",
+                  url: PROP_URL,
+                  price: prop.price,
+                  priceCurrency: "COP",
+                  availability: "https://schema.org/InStock",
+                  businessFunction:
+                    prop.operation === "arriendo"
+                      ? "http://purl.org/goodrelations/v1#LeaseOut"
+                      : "http://purl.org/goodrelations/v1#Sell",
+                  seller: { "@id": `${SITE}/#negocio` },
+                }
+              : undefined,
+          provider: {
+            "@type": "RealEstateAgent",
+            "@id": `${SITE}/#negocio`,
+            name: "REAL Bienes Raíces",
+            url: `${SITE}/`,
+          },
+        },
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Inicio", item: `${SITE}/` },
+            { "@type": "ListItem", position: 2, name: "Propiedades", item: `${SITE}/#propiedades` },
+            { "@type": "ListItem", position: 3, name: prop.title },
+          ],
+        },
+      ],
+    },
+    /* fuera los campos vacíos: un dato a medias confunde más que ayudar */
+    (k, v) => (v === undefined || v === null || v === "" ? undefined : v)
+  );
   document.head.appendChild(ld);
 
   /* ---------- Iconos ---------- */
